@@ -6,6 +6,7 @@ exports.up = function(knex) {
       .notNullable()
       .unique();
     user.string('password', 128).notNullable();
+    user.string('role').defaultTo('user');
     user.timestamps(true, true);
   });
 };

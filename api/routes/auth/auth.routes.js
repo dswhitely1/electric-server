@@ -17,8 +17,8 @@ function register(req, res) {
         return res.status(400).json(errors);
       }
       req.body.password = bcrypt.hashSync(req.body.password, 10);
-      const {username, password} = req.body;
-      Users.addUser({username, password})
+      const { username, password } = req.body;
+      Users.addUser({ username, password })
         .then(newUser => {
           const token = generateToken(newUser[0]);
           const message = `Welcome ${newUser[0].username}!`;
