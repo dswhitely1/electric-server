@@ -20,7 +20,8 @@ function addProfile(req, res) {
 }
 
 function updateProfile(req, res) {
-  Profiles.updateProfile(req.params.id, req.body)
+  const updateData = { ...req.body, updated_at: new Date() };
+  Profiles.updateProfile(req.params.id, updateData)
     .then(updatedProfile => res.json(updatedProfile[0]))
     .catch(err => res.status(500).json(err));
 }

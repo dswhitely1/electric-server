@@ -38,7 +38,7 @@ function login(req, res) {
   }
   Users.findUserBy({ username: req.body.username }).then(user => {
     if (user.length === 0) {
-      errors.username = 'Username not found';
+      errors.username = 'Username and/or Incorrect Password';
       return res.status(400).json(errors);
     }
     if (bcrypt.compareSync(req.body.password, user[0].password)) {
@@ -46,7 +46,7 @@ function login(req, res) {
       const message = `Welcome back ${user[0].username}!`;
       return res.json({ token, message });
     }
-    errors.password = 'Incorrect Password';
+    errors.username = 'Username and/or Incorrect Password';
     return res.status(401).json(errors);
   });
 }
