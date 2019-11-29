@@ -3,6 +3,7 @@ const authRoutes = require('./auth/auth.routes');
 const profileRoutes = require('./profile/profile.routes');
 const employmentRoutes = require('./employment/employment.routes');
 const educationRoutes = require('./education/education.router');
+const referenceRoutes = require('./references/reference.route');
 
 module.exports = server => {
   server.use('/', testRoute);
@@ -10,4 +11,5 @@ module.exports = server => {
   server.use('/api/profiles', profileRoutes);
   server.use('/api/employment', employmentRoutes);
   server.use('/api/education', educationRoutes);
+  server.use('/api/references', referenceRoutes);
 };
