@@ -1,5 +1,9 @@
 const db = require('../dbConfig');
 
+function findProfiles() {
+  return db('profiles');
+}
+
 function findProfileBy(filter) {
   return db('profiles').where(filter);
 }
@@ -23,4 +27,10 @@ function deleteProfile(id) {
     .del();
 }
 
-module.exports = { findProfileBy, addProfile, updateProfile, deleteProfile };
+module.exports = {
+  findProfiles,
+  findProfileBy,
+  addProfile,
+  updateProfile,
+  deleteProfile,
+};

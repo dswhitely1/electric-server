@@ -31,24 +31,31 @@ function register(req, res) {
     .catch(err => res.status(500).json(err));
 }
 
-function login(req, res) {
-  const { errors, isValid } = validateLoginInputs(req.body);
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
-  Users.findUserBy({ username: req.body.username }).then(user => {
+async function login(req, res) {
+  try {
+    const { errors, isValid } = validateLoginInputs(req.body);
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+    const user = await Users.findUserBy({ username: req.body.username });
     if (user.length === 0) {
       errors.username = 'Username and/or Incorrect Password';
       return res.status(400).json(errors);
     }
     if (bcrypt.compareSync(req.body.password, user[0].password)) {
+      await Users.updateUser(user[0].id, {
+        ...user[0],
+        updated_at: new Date(),
+      });
       const token = generateToken(user[0]);
       const message = `Welcome back ${user[0].username}!`;
-      return res.json({ token, message });
+      return res.json({ token, message, lastLogin: user[0].updated_at });
     }
     errors.username = 'Username and/or Incorrect Password';
     return res.status(401).json(errors);
-  });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 }
 
 authRouter.post('/login', login).post('/register', register);

@@ -40,9 +40,20 @@ function getUsers(req, res) {
     });
 }
 
+function getProfiles(req, res) {
+  Profiles.findProfiles()
+    .then(profiles => {
+      res.json(profiles);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+}
+
 adminRouter
   .get('/', restricted, isAdmin, checkAdmin)
   .get('/users/profile/:id', restricted, isAdmin, getUserProfile)
-  .get('/users', restricted, isAdmin, getUsers);
+  .get('/users', restricted, isAdmin, getUsers)
+  .get('/profiles', restricted, isAdmin, getProfiles);
 
 module.exports = adminRouter;
