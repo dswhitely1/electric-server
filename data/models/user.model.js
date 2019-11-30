@@ -1,7 +1,21 @@
 const db = require('../dbConfig');
 
-function findAllUsers() {
-  return db('users');
+async function findAllUsers() {
+  const users = await db('users').returning([
+    'id',
+    'username',
+    'role',
+    'created_at',
+    'updated_at',
+  ]);
+  // eslint-disable-next-line camelcase
+  return users.map(({ id, username, role, created_at, updated_at }) => ({
+    id,
+    username,
+    role,
+    created_at,
+    updated_at,
+  }));
 }
 
 function findUserBy(filter) {
