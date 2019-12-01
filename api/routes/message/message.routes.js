@@ -14,7 +14,7 @@ function fetchAllMessages(req, res) {
 function addMessage(req, res) {
   Messages.addMessage(req.body)
     .then(() => {
-      res.status(201);
+      res.status(201).json({ message: 'Success' });
     })
     .catch(err => {
       res.status(500).json(err);
