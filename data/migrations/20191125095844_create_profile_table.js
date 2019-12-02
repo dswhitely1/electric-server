@@ -31,6 +31,7 @@ exports.up = function(knex) {
     profile.boolean('permitYes').defaultTo(false);
     profile.boolean('permitNo').defaultTo(false);
     profile.boolean('permitNA').defaultTo(true);
+    profile.boolean('read').defaultTo(false);
     profile
       .integer('userId')
       .notNullable()
