@@ -1,0 +1,57 @@
+exports.seed = function(knex) {
+  // Deletes ALL existing entries
+  return knex('company_payroll')
+    .del()
+    .then(function() {
+      // Inserts seed entries
+      return knex('company_payroll').insert([
+        { payroll_id: 1, taxType_id: 1, amount: 1200.67 },
+        { payroll_id: 1, taxType_id: 2, amount: 464.93 },
+        { payroll_id: 1, taxType_id: 3, amount: 108.73 },
+        { payroll_id: 1, taxType_id: 4, amount: 464.92 },
+        { payroll_id: 1, taxType_id: 5, amount: 108.73 },
+        { payroll_id: 1, taxType_id: 6, amount: 2.28 },
+        { payroll_id: 1, taxType_id: 7, amount: 265.13 },
+        { payroll_id: 1, taxType_id: 8, amount: 15.24 },
+        { payroll_id: 1, taxType_id: 9, amount: 51.55 },
+        { payroll_id: 1, taxType_id: 10, amount: 0.65 },
+        { payroll_id: 1, taxType_id: 11, amount: 28.39 },
+        { payroll_id: 1, taxType_id: 15, amount: 19.23 },
+        { payroll_id: 2, taxType_id: 1, amount: 1166.44 },
+        { payroll_id: 2, taxType_id: 2, amount: 444.89 },
+        { payroll_id: 2, taxType_id: 3, amount: 104.04 },
+        { payroll_id: 2, taxType_id: 4, amount: 444.91 },
+        { payroll_id: 2, taxType_id: 5, amount: 104.05 },
+        { payroll_id: 2, taxType_id: 6, amount: 1.9 },
+        { payroll_id: 2, taxType_id: 7, amount: 254.69 },
+        { payroll_id: 2, taxType_id: 8, amount: 8.63 },
+        { payroll_id: 2, taxType_id: 9, amount: 51.21 },
+        { payroll_id: 2, taxType_id: 11, amount: 24.33 },
+        { payroll_id: 2, taxType_id: 15, amount: 18.19 },
+        { payroll_id: 3, taxType_id: 1, amount: 1200.82 },
+        { payroll_id: 3, taxType_id: 2, amount: 471.16 },
+        { payroll_id: 3, taxType_id: 3, amount: 110.21 },
+        { payroll_id: 3, taxType_id: 4, amount: 471.16 },
+        { payroll_id: 3, taxType_id: 5, amount: 110.19 },
+        { payroll_id: 3, taxType_id: 6, amount: 4.89 },
+        { payroll_id: 3, taxType_id: 7, amount: 268.38 },
+        { payroll_id: 3, taxType_id: 8, amount: 22.24 },
+        { payroll_id: 3, taxType_id: 9, amount: 51.84 },
+        { payroll_id: 3, taxType_id: 10, amount: 6.54 },
+        { payroll_id: 3, taxType_id: 11, amount: 21.86 },
+        { payroll_id: 3, taxType_id: 15, amount: 16.41 },
+        { payroll_id: 4, taxType_id: 1, amount: 1273.83 },
+        { payroll_id: 4, taxType_id: 2, amount: 508.65 },
+        { payroll_id: 4, taxType_id: 3, amount: 118.95 },
+        { payroll_id: 4, taxType_id: 4, amount: 508.63 },
+        { payroll_id: 4, taxType_id: 5, amount: 118.95 },
+        { payroll_id: 4, taxType_id: 6, amount: 6.62 },
+        { payroll_id: 4, taxType_id: 7, amount: 287.9 },
+        { payroll_id: 4, taxType_id: 8, amount: 30.12 },
+        { payroll_id: 4, taxType_id: 9, amount: 51.22 },
+        { payroll_id: 4, taxType_id: 10, amount: 8.34 },
+        { payroll_id: 4, taxType_id: 11, amount: 32.12 },
+        { payroll_id: 4, taxType_id: 15, amount: 20.85 },
+      ]);
+    });
+};
