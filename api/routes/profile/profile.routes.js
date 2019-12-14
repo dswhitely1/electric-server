@@ -33,9 +33,9 @@ function deleteProfile(req, res) {
 }
 
 profileRouter
-  .get('/', restricted, getProfile)
-  .post('/', restricted, addProfile)
-  .put('/:id', restricted, updateProfile)
-  .delete('/:id', restricted, deleteProfile);
+  .get('/', getProfile)
+  .post('/', addProfile)
+  .put('/:id', updateProfile)
+  .delete('/:id', deleteProfile);
 
 module.exports = profileRouter;

@@ -45,9 +45,9 @@ function deleteReference(req, res) {
 }
 
 referenceRouter
-  .get('/', restricted, getReferenceData)
-  .post('/', restricted, addReferenceData)
-  .put('/:id', restricted, updateReferenceData)
-  .delete('/:id', restricted, deleteReference);
+  .get('/', getReferenceData)
+  .post('/', addReferenceData)
+  .put('/:id', updateReferenceData)
+  .delete('/:id', deleteReference);
 
 module.exports = referenceRouter;

@@ -11,16 +11,6 @@ function fetchAllMessages(req, res) {
     .catch(err => res.status(500).json(err));
 }
 
-function addMessage(req, res) {
-  Messages.addMessage(req.body)
-    .then(() => {
-      res.status(201).json({ message: 'Success' });
-    })
-    .catch(err => {
-      res.status(500).json(err);
-    });
-}
-
 function updateMessage(req, res) {
   Messages.updateMessage(req.params.id, req.body)
     .then(messages => {
@@ -43,7 +33,6 @@ function deleteMessage(req, res) {
 
 messageRouter
   .get('/', restricted, isAdmin, fetchAllMessages)
-  .post('/', addMessage)
   .put('/:id', restricted, isAdmin, updateMessage)
   .delete('/:id', restricted, isAdmin, deleteMessage);
 

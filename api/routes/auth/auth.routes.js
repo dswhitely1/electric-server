@@ -1,6 +1,7 @@
 const authRouter = require('express').Router();
 const bcrypt = require('bcryptjs');
 const Users = require('../../../data/models/user.model');
+const Messages = require('../../../data/models/message.model');
 const validateRegisterInputs = require('../../../data/validators/register.validation');
 const validateLoginInputs = require('../../../data/validators/login.validation');
 const generateToken = require('../../utils/generateToken');
@@ -58,6 +59,16 @@ async function login(req, res) {
   }
 }
 
-authRouter.post('/login', login).post('/register', register);
+function addMessage(req, res) {
+  Messages.addMessage(req.body)
+      .then(() => {
+        res.status(201).json({ message: 'Success' });
+      })
+      .catch(err => {
+        res.status(500).json(err);
+      });
+}
+
+authRouter.post('/login', login).post('/register', register).post('/messages', addMessage);
 
 module.exports = authRouter;
