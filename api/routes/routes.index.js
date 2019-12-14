@@ -7,6 +7,7 @@ const referenceRoutes = require('./references/reference.route');
 const adminRoutes = require('./admin/admin.routes');
 const messageRoutes = require('./message/message.routes');
 const taxLocationRoutes = require('./payroll/tax_locations/tax-locations.routes');
+const taxTypeRoutes = require('./payroll/tax-types/tax-types.routes');
 
 module.exports = server => {
   server.use('/', testRoute);
@@ -18,4 +19,5 @@ module.exports = server => {
   server.use('/api/admin', adminRoutes);
   server.use('/api/messages', messageRoutes);
   server.use('/api/payroll/tax-locations', taxLocationRoutes);
+  server.use('/api/payroll/tax-types', taxTypeRoutes);
 };
