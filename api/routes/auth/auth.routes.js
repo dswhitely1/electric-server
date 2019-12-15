@@ -61,14 +61,17 @@ async function login(req, res) {
 
 function addMessage(req, res) {
   Messages.addMessage(req.body)
-      .then(() => {
-        res.status(201).json({ message: 'Success' });
-      })
-      .catch(err => {
-        res.status(500).json(err);
-      });
+    .then(() => {
+      res.status(201).json({ message: 'Success' });
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
 }
 
-authRouter.post('/login', login).post('/register', register).post('/messages', addMessage);
+authRouter
+  .post('/login', login)
+  .post('/register', register)
+  .post('/messages', addMessage);
 
 module.exports = authRouter;
