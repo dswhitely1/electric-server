@@ -1,7 +1,7 @@
 exports.up = function(knex) {
   return knex.schema.createTable('employee_payroll', tbl => {
     tbl
-      .integer('employee_id')
+      .integer('employeeId')
       .unsigned()
       .notNullable()
       .references('id')
@@ -9,7 +9,7 @@ exports.up = function(knex) {
       .onUpdate('CASCADE')
       .onDelete('CASCADE');
     tbl
-      .integer('payroll_id')
+      .integer('payrollId')
       .unsigned()
       .notNullable()
       .references('id')
@@ -17,7 +17,7 @@ exports.up = function(knex) {
       .onUpdate('CASCADE')
       .onDelete('CASCADE');
     tbl
-      .integer('location_id')
+      .integer('locationId')
       .unsigned()
       .notNullable()
       .references('id')
@@ -27,7 +27,7 @@ exports.up = function(knex) {
     tbl.float('grossWage').notNullable();
     tbl.float('netWage').notNullable();
     tbl.timestamps(true, true);
-    tbl.primary(['employee_id', 'payroll_id', 'location_id']);
+    tbl.primary(['employeeId', 'payrollId', 'locationId']);
   });
 };
 
