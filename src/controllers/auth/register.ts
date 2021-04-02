@@ -1,12 +1,17 @@
 import { NextFunction, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcryptjs';
+import { registerValidation } from './middleware/registerValidation';
 
 export const register = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
+  const { errors, isValid } = registerValidation(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
   const prisma = new PrismaClient();
   try {
     const user = await prisma.user.findUnique({
