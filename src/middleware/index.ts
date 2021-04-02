@@ -4,6 +4,7 @@ import {
   handleCors,
   handleHelmet,
   handleMorgan,
+  handleRestricted,
 } from './common';
 
 export default [
@@ -12,4 +13,5 @@ export default [
   handleCors,
   handleCompression,
   handleMorgan,
+  handleRestricted,
 ];
