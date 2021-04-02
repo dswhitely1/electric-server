@@ -1,9 +1,18 @@
 import { login, register } from '../../controllers';
-import { Router } from 'express';
+import { Route } from '../../utils';
+import { loginUser } from '../../controllers/auth/middleware';
 
-const router = Router();
+const authRoutes: Route[] = [
+  {
+    path: '/auth/login',
+    method: 'get',
+    handler: [loginUser, login],
+  },
+  {
+    path: '/auth/register',
+    method: 'post',
+    handler: register,
+  },
+];
 
-router.route('/login').post(login);
-router.route('/register').post(register);
-
-export default router;
+export default authRoutes;
