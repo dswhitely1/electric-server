@@ -34,6 +34,10 @@ export const handleRestricted = (router: Router) =>
           url: '/_health',
           methods: ['GET'],
         },
+        {
+          url: '/coverage/',
+          methods: ['GET'],
+        },
       ],
     }),
   );
