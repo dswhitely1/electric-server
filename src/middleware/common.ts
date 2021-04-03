@@ -30,6 +30,10 @@ export const handleRestricted = (router: Router) =>
           url: '/auth/register',
           methods: ['POST'],
         },
+        {
+          url: '/_health',
+          methods: ['GET'],
+        },
       ],
     }),
   );
