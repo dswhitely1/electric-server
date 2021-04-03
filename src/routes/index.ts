@@ -1,11 +1,4 @@
 import authRoutes from './auth';
-import { Request, Response } from 'express';
+import testRoutes from './test';
 
-export default [
-  ...authRoutes,
-  {
-    path: '/_health',
-    method: 'get',
-    handler: (req: Request, res: Response) => res.json({ message: 'Alive' }),
-  },
-];
+export default [...testRoutes, ...authRoutes];
