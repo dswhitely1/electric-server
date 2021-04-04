@@ -13,7 +13,7 @@
     "test": "jest",
     "presonar": "npm run test -- --coverage --testResultsProcessor jest-sonar-reporter",
     "sonar": "node -r dotenv/config sonarqube-scanner.js",
-    "prepare": "husky install"
+    "prepare": "husky install || exit 0"
   },
   "keywords": [],
   "author": "",
