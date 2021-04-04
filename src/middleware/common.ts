@@ -35,8 +35,8 @@ export const handleRestricted = (router: Router) =>
           methods: ['GET'],
         },
         {
-          url: '/coverage/',
-          methods: ['GET'],
+          url: '/messages',
+          methods: ['POST'],
         },
       ],
     }),

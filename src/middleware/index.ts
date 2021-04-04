@@ -6,6 +6,7 @@ import {
   handleMorgan,
   handleRestricted,
 } from './common';
+export * from './isAdmin';
 
 export default [
   handleHelmet,

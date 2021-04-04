@@ -5,7 +5,7 @@ type Handler = (
   req: RequestWithUser,
   res: Response,
   next: NextFunction,
-) => Promise<void> | void | Promise<Response | undefined>;
+) => Promise<void> | void | Promise<Response | undefined> | Response;
 
 export type Route = {
   path: string;

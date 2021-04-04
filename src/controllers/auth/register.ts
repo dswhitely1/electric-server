@@ -20,7 +20,7 @@ export const register = async (
         .json({ username: 'Username has already been taken' });
     }
     req.body.password = bcrypt.hashSync(req.body.password, 10);
-    prismaStore.createUser({
+    await prismaStore.createUser({
       username: req.body.username,
       password: req.body.password,
     });

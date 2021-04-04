@@ -18,6 +18,7 @@ export const loginUser = async (
   )
     .toString('ascii')
     .split(':');
+  console.log({ username, password });
   try {
     const user = await prismaStore.getUserByUsername(username);
     if (!user) {
