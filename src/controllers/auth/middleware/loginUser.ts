@@ -1,7 +1,7 @@
 import { NextFunction, Response } from 'express';
 import * as bcrypt from 'bcryptjs';
 import { RequestWithUser } from '../../../types';
-import prismaStore from '../../../store/prismaStore';
+import { PrismaClient } from '@prisma/client';
 
 export const loginUser = async (
   req: RequestWithUser,
@@ -18,9 +18,9 @@ export const loginUser = async (
   )
     .toString('ascii')
     .split(':');
-  console.log({ username, password });
+  const prisma = new PrismaClient();
   try {
-    const user = await prismaStore.getUserByUsername(username);
+    const user = await prisma.user.findUnique({ where: { username } });
     if (!user) {
       return res
         .status(401)
@@ -32,9 +32,14 @@ export const loginUser = async (
         .json({ username: 'Invalid username and/or password' });
     }
     req.user = user;
-    prismaStore.updateLogin(user);
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { updatedAt: new Date() },
+    });
     next();
   } catch (error) {
     next(error);
+  } finally {
+    await prisma.$disconnect();
   }
 };

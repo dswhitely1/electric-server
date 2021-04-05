@@ -4,7 +4,6 @@ import cors from 'cors';
 import compression from 'compression';
 import morgan, { StreamOptions } from 'morgan';
 import { restricted } from './restricted';
-import { errorHandling } from './errorHandling';
 import { logger } from '../services/logger';
 
 export const handleHelmet = (router: Router) => router.use(helmet());

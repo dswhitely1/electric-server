@@ -1,6 +1,6 @@
 import { RequestWithUser } from '../../types';
 import { NextFunction, Response } from 'express';
-import prismaStore from '../../store/prismaStore';
+import { PrismaClient } from '@prisma/client';
 
 export const deleteMessage = async (
   req: RequestWithUser,
@@ -8,10 +8,13 @@ export const deleteMessage = async (
   next: NextFunction,
 ) => {
   const id = parseInt(req.params.id);
+  const prisma = new PrismaClient();
   try {
-    await prismaStore.deleteMessage(id);
+    await prisma.message.delete({ where: { id } });
     res.status(204).json({ message: 'Deleted' });
   } catch (error) {
     next(error);
+  } finally {
+    await prisma.$disconnect();
   }
 };

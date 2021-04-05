@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { newMessageValidation } from '.';
-import prismaStore from '../../store/prismaStore';
+import { PrismaClient } from '@prisma/client';
 
-export const createMessage = (
+export const createMessage = async (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -11,10 +11,13 @@ export const createMessage = (
   if (!isValid) {
     return res.status(400).json(errors);
   }
+  const prisma = new PrismaClient();
   try {
-    prismaStore.createMessage(req.body);
+    await prisma.message.create({ data: { ...req.body } });
     res.status(201).json({ message: 'Message saved' });
   } catch (error) {
     next(error);
+  } finally {
+    await prisma.$disconnect();
   }
 };

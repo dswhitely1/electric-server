@@ -1,17 +1,15 @@
-import { RequestWithUser } from '../types';
-import { Response } from 'express';
-import { Boom } from '@hapi/boom';
+import { Express, NextFunction, Request, Response } from 'express';
+import * as ErrorHandler from '../utils';
 
-export const errorHandling = (
-  error: Boom,
-  req: RequestWithUser,
-  res: Response,
-) => {
-  const { message = 'Internal Server Error', isBoom, output } = error;
-  if (isBoom) {
-    return res
-      .status(output.statusCode)
-      .json({ message, success: false, output });
-  }
-  return res.status(500).json({ success: false, message });
+export const handleClientError = (router: Express) => {
+  router.use((err: any, req: Request, res: Response, next: NextFunction) => {
+    ErrorHandler.clientError(err, res, next);
+  });
 };
+
+export const handleServerError = (router: Express) => {
+  router.use((err: Error, req: Request, res: Response) =>
+    ErrorHandler.serverError(err, res),
+  );
+};
+export default [handleClientError, handleServerError];
