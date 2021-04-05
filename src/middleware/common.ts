@@ -2,8 +2,10 @@ import { urlencoded, json, Router } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import compression from 'compression';
-import morgan from 'morgan';
+import morgan, { StreamOptions } from 'morgan';
 import { restricted } from './restricted';
+import { errorHandling } from './errorHandling';
+import { logger } from '../services/logger';
 
 export const handleHelmet = (router: Router) => router.use(helmet());
 
@@ -16,7 +18,26 @@ export const handleCors = (router: Router) => router.use(cors());
 
 export const handleCompression = (router: Router) => router.use(compression());
 
-export const handleMorgan = (router: Router) => router.use(morgan('dev'));
+// Morgan Options
+const stream: StreamOptions = {
+  write: (message) => {
+    const fixedMessage = message.replace(/\n/g, '');
+    logger.info(fixedMessage);
+  },
+};
+
+const skip = () => {
+  const env = process.env.NODE_ENV || 'development';
+  return env !== 'development';
+};
+
+export const handleMorgan = (router: Router) =>
+  router.use(
+    morgan('dev', {
+      stream,
+      skip,
+    }),
+  );
 
 export const handleRestricted = (router: Router) =>
   router.use(
