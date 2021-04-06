@@ -32,7 +32,11 @@ export const loginUser = async (
         .status(401)
         .json({ username: 'Invalid username and/or password' });
     }
-    req.user = user;
+    req.user = {
+      id: user.id,
+      role: user.role,
+      username: user.username,
+    };
     await prisma.user.update({
       where: { id: user.id },
       data: { updatedAt: new Date() },

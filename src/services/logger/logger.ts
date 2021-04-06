@@ -6,11 +6,11 @@ export const logger = winston.createLogger({
     winston.format.colorize(),
     winston.format.prettyPrint(),
     winston.format.json(),
-    winston.format.timestamp({ format: 'DD-MM-YYYY hh:mm:ss A' }),
+    winston.format.timestamp({ format: 'MM-DD-YYYY hh:mm:ss:ms A' }),
     winston.format.printf((nfo) => {
       let message = `${nfo.timestamp} - ${nfo.level}: ${nfo.message}`;
       if (nfo.extra) {
-        message += `\n${nfo.extra}`;
+        message += `, data: ${JSON.stringify(nfo.extra)}`;
       }
       return message;
     }),
