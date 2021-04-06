@@ -36,6 +36,7 @@ export const loginUser = async (
       id: user.id,
       role: user.role,
       username: user.username,
+      updatedAt: user.updatedAt,
     };
     await prisma.user.update({
       where: { id: user.id },

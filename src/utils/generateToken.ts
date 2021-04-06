@@ -1,10 +1,11 @@
 import jwt from 'jsonwebtoken';
 import { User } from '@prisma/client';
 
-export const generateToken = (user: User) => {
+export const generateToken = (user: Pick<User, 'id' | 'role' | 'username'>) => {
   const payload = {
     sub: user.id,
     role: user.role,
+    username: user.username,
   };
   const {
     JWT_SECRET = `Shh, it's a secret`,
