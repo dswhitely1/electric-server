@@ -1,6 +1,7 @@
 import { RequestWithUser } from '../../types';
 import { NextFunction, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
+import { logger } from '../../services/logger';
 
 export const deleteMessage = async (
   req: RequestWithUser,
@@ -13,7 +14,10 @@ export const deleteMessage = async (
     await prisma.message.delete({ where: { id } });
     res.status(204).json({ message: 'Deleted' });
   } catch (error) {
-    next(error);
+    if (process.env.NODE_ENV === 'development') {
+      logger.error({ message: 'Internal Server Error', extra: error.stack });
+    }
+    res.status(500).json({ message: 'Internal Server Error' });
   } finally {
     await prisma.$disconnect();
   }

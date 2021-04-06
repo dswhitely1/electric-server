@@ -1,6 +1,7 @@
 import { NextFunction, Response } from 'express';
 import { RequestWithUser } from '../../types';
 import { PrismaClient } from '@prisma/client';
+import { logger } from '../../services/logger';
 
 export const getAllMessages = async (
   req: RequestWithUser,
@@ -12,7 +13,10 @@ export const getAllMessages = async (
     const messages = await prisma.message.findMany();
     res.json(messages);
   } catch (error) {
-    next(error);
+    if (process.env.NODE_ENV === 'development') {
+      logger.error({ message: 'Internal Server Error', extra: error.stack });
+    }
+    res.status(500).json({ message: 'Internal Server Error' });
   } finally {
     await prisma.$disconnect();
   }

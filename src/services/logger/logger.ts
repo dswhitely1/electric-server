@@ -10,10 +10,10 @@ export const logger = winston.createLogger({
     winston.format.printf((nfo) => {
       let message = `${nfo.timestamp} - ${nfo.level}: ${nfo.message}`;
       if (nfo.extra) {
-        message += `\n${JSON.stringify(nfo.extra)}`;
+        message += `\n${nfo.extra}`;
       }
       return message;
     }),
   ),
-  transports: [new winston.transports.Console({ handleExceptions: true })],
+  transports: [new winston.transports.Console()],
 });

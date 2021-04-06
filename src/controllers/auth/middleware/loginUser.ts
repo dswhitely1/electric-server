@@ -2,6 +2,7 @@ import { NextFunction, Response } from 'express';
 import * as bcrypt from 'bcryptjs';
 import { RequestWithUser } from '../../../types';
 import { PrismaClient } from '@prisma/client';
+import { logger } from '../../../services/logger';
 
 export const loginUser = async (
   req: RequestWithUser,
@@ -10,7 +11,7 @@ export const loginUser = async (
 ) => {
   const { authorization } = req.headers;
   if (!authorization) {
-    return res.status(400).json({ message: 'Authorization Header is missing' });
+    return res.status(400).json({ message: 'Authorization Header Missing' });
   }
   const [username, password] = Buffer.from(
     authorization.split(' ')[1],
@@ -38,7 +39,10 @@ export const loginUser = async (
     });
     next();
   } catch (error) {
-    next(error);
+    if (process.env.NODE_ENV === 'development') {
+      logger.error({ message: 'Internal Server Error', extra: error.stack });
+    }
+    res.status(500).json({ message: 'Internal Server Error' });
   } finally {
     await prisma.$disconnect();
   }

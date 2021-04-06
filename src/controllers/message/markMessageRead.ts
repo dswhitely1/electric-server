@@ -1,6 +1,7 @@
 import { RequestWithUser } from '../../types';
 import { NextFunction, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
+import { logger } from '../../services/logger';
 
 export const markMessageRead = async (
   req: RequestWithUser,
@@ -13,7 +14,10 @@ export const markMessageRead = async (
     await prisma.message.update({ where: { id }, data: { read: true } });
     res.status(202).json({ message: 'Accepted' });
   } catch (error) {
-    next(error);
+    if (process.env.NODE_ENV === 'development') {
+      logger.error({ message: 'Internal Server Error', extra: error.stack });
+    }
+    res.status(500).json({ message: 'Internal Server Error' });
   } finally {
     await prisma.$disconnect();
   }

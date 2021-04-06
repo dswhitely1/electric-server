@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import * as bcrypt from 'bcryptjs';
 import { registerValidation } from './middleware/registerValidation';
 import { PrismaClient } from '@prisma/client';
+import { logger } from '../../services/logger';
 
 export const register = async (
   req: Request,
@@ -27,7 +28,10 @@ export const register = async (
       .status(201)
       .json({ message: `${username} was created successfully.` });
   } catch (error) {
-    next(error);
+    if (process.env.NODE_ENV === 'development') {
+      logger.error({ message: 'Internal Server Error', extra: error.stack });
+    }
+    res.status(500).json({ message: 'Internal Server Error' });
   } finally {
     await prisma.$disconnect();
   }

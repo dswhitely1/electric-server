@@ -3,20 +3,10 @@ import { logger } from './services';
 
 const { PORT = 3000 } = process.env;
 
-process.on('uncaughtException', (e) => {
-  logger.error({
-    message: 'uncaughtException',
-    extra: e,
-  });
-  process.exit(1);
-});
-
-process.on('unhandledRejection', (e) => {
-  logger.error({
-    message: 'unhandledRejection',
-    extra: e,
-  });
-  process.exit(1);
+process.on('unhandledRejection', (err) => {
+  if (process.env.NODE_ENV === 'development') {
+    logger.warn({ message: 'unhandledRejection', extra: err });
+  }
 });
 
 server.listen(PORT, () =>

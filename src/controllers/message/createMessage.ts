@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { newMessageValidation } from '.';
 import { PrismaClient } from '@prisma/client';
+import { logger } from '../../services/logger';
 
 export const createMessage = async (
   req: Request,
@@ -16,7 +17,10 @@ export const createMessage = async (
     await prisma.message.create({ data: { ...req.body } });
     res.status(201).json({ message: 'Message saved' });
   } catch (error) {
-    next(error);
+    if (process.env.NODE_ENV === 'development') {
+      logger.error({ message: 'Internal Server Error', extra: error.stack });
+    }
+    res.status(500).json({ message: 'Internal Server Error' });
   } finally {
     await prisma.$disconnect();
   }
