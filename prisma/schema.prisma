@@ -11,116 +11,116 @@ generator client {
 }
 
 model User {
-    id          Int         @default(autoincrement()) @id
-    username    String      @unique
-    password    String
-    role        Role        @default(USER)
-    createdAt   DateTime    @default(now())
-    updatedAt   DateTime    @updatedAt
-    profile     Profile?
-    employment  Employment[]
-    education   Education[]
-    references  Reference[]
+  id         Int          @id @default(autoincrement())
+  username   String       @unique
+  password   String
+  role       Role         @default(USER)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  profile    Profile?
+  employment Employment[]
+  education  Education[]
+  references Reference[]
 }
 
 model Profile {
-    id              Int             @default(autoincrement()) @id
-    firstName       String
-    middleName      String?
-    lastName        String
-    preferredName   String?
-    address         Address[]
-    availability    Availability[]
-    referredBy      String
-    desiredPay      String
-    position        String
-    startDate       DateTime        @default(now())
-    authorized      Boolean         @default(false)
-    underAge        Boolean         @default(false)
-    permit          Permit          @default(NA)
-    user            User            @relation(fields: [userId], references: [id])
-    userId          Int             @unique
+  id            Int            @id @default(autoincrement())
+  firstName     String
+  middleName    String?
+  lastName      String
+  preferredName String?
+  address       Address[]
+  availability  Availability[]
+  referredBy    String
+  desiredPay    String
+  position      String
+  startDate     DateTime       @default(now())
+  authorized    Boolean        @default(false)
+  underAge      Boolean        @default(false)
+  permit        Permit         @default(NA)
+  user          User           @relation(fields: [userId], references: [id])
+  userId        Int            @unique
 }
 
 model Address {
-    id              Int         @default(autoincrement()) @id
-    label           String
-    address         String
-    address1        String?
-    city            String
-    state           String
-    zipCode         String
-    profile         Profile     @relation(fields: [profileId], references: [id])
-    profileId       Int
+  id        Int     @id @default(autoincrement())
+  label     String
+  address   String
+  address1  String?
+  city      String
+  state     String
+  zipCode   String
+  profile   Profile @relation(fields: [profileId], references: [id])
+  profileId Int
 }
 
 model Availability {
-    id          Int                 @default(autoincrement()) @id
-    available   AvailabilityEnum    @default(FULLTIME)
-    Profile     Profile             @relation(fields: [profileId], references: [id])
-    profileId   Int
+  id        Int              @id @default(autoincrement())
+  available AvailabilityEnum @default(FULLTIME)
+  Profile   Profile          @relation(fields: [profileId], references: [id])
+  profileId Int
 }
 
 model Employment {
-    id          Int                 @default(autoincrement()) @id
-    companyName String
-    cityState   String
-    phoneNumber String
-    supervisor  String
-    startDate   DateTime
-    endDate     DateTime?
-    contact     Boolean             @default(false)
-    user        User                @relation(fields: [userId], references: [id])
-    userId      Int
+  id          Int       @id @default(autoincrement())
+  companyName String
+  cityState   String
+  phoneNumber String
+  supervisor  String
+  startDate   DateTime
+  endDate     DateTime?
+  contact     Boolean   @default(false)
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int
 }
 
 model Education {
-    id          Int                 @default(autoincrement()) @id
-    schoolName  String
-    subject     String
-    graduate    Boolean             @default(true)
-    received    String
-    user        User                @relation(fields: [userId], references: [id])
-    userId      Int
+  id         Int     @id @default(autoincrement())
+  schoolName String
+  subject    String
+  graduate   Boolean @default(true)
+  received   String
+  user       User    @relation(fields: [userId], references: [id])
+  userId     Int
 }
 
 model Reference {
-    id              Int                 @default(autoincrement()) @id
-    name            String
-    relationship    String
-    years           String
-    phoneNumber     String
-    user            User                @relation(fields: [userId], references: [id])
-    userId          Int
+  id           Int    @id @default(autoincrement())
+  name         String
+  relationship String
+  years        String
+  phoneNumber  String
+  user         User   @relation(fields: [userId], references: [id])
+  userId       Int
 }
 
 model Message {
-    id              Int                 @default(autoincrement()) @id
-    firstName       String
-    lastName        String
-    contact         String
-    subject         String
-    message         String
-    read            Boolean             @default(false)
+  id        Int     @id @default(autoincrement())
+  firstName String
+  lastName  String
+  contact   String
+  subject   String
+  message   String
+  read      Boolean @default(false)
 }
 
 enum Role {
-    USER
-    ADMIN
+  USER
+  ADMIN
 }
 
 enum AvailabilityEnum {
-    FULLTIME
-    PARTTIME
-    TEMPORARY
-    WEEKDAYS
-    WEEKENDS
-    EVENINGS
-    NIGHTS
+  FULLTIME
+  PARTTIME
+  TEMPORARY
+  WEEKDAYS
+  WEEKENDS
+  EVENINGS
+  NIGHTS
 }
 
 enum Permit {
-    YES
-    NO
-    NA
+  YES
+  NO
+  NA
 }
